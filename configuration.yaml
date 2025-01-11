@@ -1,0 +1,60 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+device_tracker:
+- platform: bluetooth_le_tracker
+
+#Quirks for Zigbee Thermostat
+zha: 
+    custom_quirks_path: /config/config/custom_zha_quirks
+    
+sensor:
+  - platform: template
+    sensors:
+      is_daytime:
+        value_template: "{{ state_attr('sun.sun', 'elevation') > 3 }}"
+
+utility_meter:
+  kueche_energy:
+    source: sensor.riemannkueche
+    cycle: daily
+    tariffs:
+      - daylight
+      - night
+  az_energy:
+    source: sensor.riemannsum_az
+    cycle: daily
+    tariffs:
+      - daylight
+      - night
+
+template:
+  - sensor:
+      - name: "Total Energy Consumption Day"
+        unit_of_measurement: "Wh"
+        state_class: total
+        device_class: energy
+        state: >
+          {{ 
+            states('sensor.kueche_energy_day') | float(0) +
+            states('sensor.az_energy_day') | float(0)
+          }}
+  - sensor:
+      - name: "Total Energy Consumption Night"
+        unit_of_measurement: "Wh"
+        state_class: total
+        device_class: energy
+        state: >
+          {{ 
+            states('sensor.kueche_energy_night') | float(0) +
+            states('sensor.az_energy_night') | float(0)
+          }}
