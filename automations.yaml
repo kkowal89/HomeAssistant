@@ -1,0 +1,224 @@
+- id: '2334 AZ'
+  alias: Switch AZ Energy Tariff
+  trigger:
+      - platform: state
+        entity_id: sensor.is_daytime
+  action:
+      - service: select.select_option
+        target:
+          entity_id: select.az_energy
+        data:
+          option: >
+            {% if states('sensor.is_daytime') == 'true' %}
+              daylight
+            {% else %}
+              night
+            {% endif %}
+- id: '2334 Kueche'
+  alias: Switch Kitchen Energy Tariff
+  trigger:
+      - platform: state
+        entity_id: sensor.is_daytime
+  action:
+      - service: select.select_option
+        target:
+          entity_id: select.kueche_energy
+        data:
+          option: >
+            {% if states('sensor.is_daytime') == 'true' %}
+              daylight
+            {% else %}
+              night
+            {% endif %}
+- id: '1734987755592'
+  alias: Schalte Wohnzimmer ein oder aus
+  description: ''
+  triggers:
+  - device_id: da00b488c6a27cda4a2c77904a8d1e7e
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    metadata: {}
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 94fac33ef8ba3fcbf1a67e710755f09a
+    entity_id: 445ccbc016b29424584d15e3de50e3b7
+    domain: switch
+  mode: single
+- id: '1734988240216'
+  alias: Wohnzimmer an/aus
+  description: ''
+  triggers:
+  - device_id: 012478b40a833779d2c20907c4f6a097
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 94fac33ef8ba3fcbf1a67e710755f09a
+    entity_id: 445ccbc016b29424584d15e3de50e3b7
+    domain: switch
+  mode: single
+- id: '1735218193653'
+  alias: Kevins Rechner An/aus
+  description: ''
+  triggers:
+  - device_id: 9788c1144c4a45d692f5c9e4164c9382
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    metadata: {}
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 838f8a7f0aac103c8e65aecde55dbc92
+    entity_id: 49b631ec1968710cb37bc5c6599c5a0b
+    domain: switch
+  mode: single
+- id: '1735578863895'
+  alias: Drücken
+  description: ''
+  triggers:
+  - device_id: 561320860870d484bd39eb1c34906ddb
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: f21d7ad2561ae3d35093dfad603da156
+    entity_id: e7b71858c03bcfc0120c9af4f54799f5
+    domain: switch
+  mode: single
+- id: '1735578926755'
+  alias: Neue Automatisierung
+  description: ''
+  triggers:
+  - device_id: b3792050cee15722f5ba9b8b8720f09a
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    metadata: {}
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 94fac33ef8ba3fcbf1a67e710755f09a
+    entity_id: 445ccbc016b29424584d15e3de50e3b7
+    domain: switch
+  mode: single
+- id: '1735578973163'
+  alias: Neue Automatisierung
+  description: ''
+  triggers:
+  - device_id: ea92f5e8b9f1bc5631ceb36ee24b8a4b
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    metadata: {}
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 838f8a7f0aac103c8e65aecde55dbc92
+    entity_id: 49b631ec1968710cb37bc5c6599c5a0b
+    domain: switch
+  mode: single
+- id: '1735852118691'
+  alias: halten
+  description: ''
+  triggers:
+  - device_id: 561320860870d484bd39eb1c34906ddb
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    trigger: device
+    value: 2
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: f21d7ad2561ae3d35093dfad603da156
+    entity_id: e7b71858c03bcfc0120c9af4f54799f5
+    domain: switch
+  mode: single
+- id: '1735852204963'
+  alias: Loslassen
+  description: ''
+  triggers:
+  - device_id: 561320860870d484bd39eb1c34906ddb
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '001'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 001
+    trigger: device
+    value: 1
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: f21d7ad2561ae3d35093dfad603da156
+    entity_id: e7b71858c03bcfc0120c9af4f54799f5
+    domain: switch
+  mode: single
+- id: '1736359329156'
+  alias: 'Küche ein aus '
+  description: ''
+  triggers:
+  - device_id: 8b5807ddae811b8591db376a9719dea5
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '006'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 006
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: f21d7ad2561ae3d35093dfad603da156
+    entity_id: e7b71858c03bcfc0120c9af4f54799f5
+    domain: switch
+  mode: single
