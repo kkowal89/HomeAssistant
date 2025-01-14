@@ -36,7 +36,13 @@ utility_meter:
     tariffs:
       - daylight
       - night
-
+  balkon_energy_daily:
+    source: sensor.riemannsum_balkonkraftwerk
+    cycle: daily
+  balkon_energy_monthly:
+    source: sensor.riemannsum_balkonkraftwerk
+    cycle: monthly
+    
 template:
   - sensor:
       - name: "Total Energy Consumption Day"
