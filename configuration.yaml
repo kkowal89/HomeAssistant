@@ -21,27 +21,24 @@ sensor:
   - platform: template
     sensors:
       is_daytime:
-        value_template: "{{ state_attr('sun.sun', 'elevation') > 3 }}"
+        value_template: "{{ state_attr('sun.sun', 'elevation') > 4 }}"
 
 utility_meter:
-  kueche_energy:
-    source: sensor.riemannkueche
-    cycle: daily
-    tariffs:
-      - daylight
-      - night
-  az_energy:
-    source: sensor.riemannsum_az
-    cycle: daily
-    tariffs:
-      - daylight
-      - night
   balkon_energy_daily:
     source: sensor.riemannsum_balkonkraftwerk
     cycle: daily
   balkon_energy_monthly:
     source: sensor.riemannsum_balkonkraftwerk
     cycle: monthly
+  gesamt_energy:
+    source: sensor.riemann_wohnung
+    cycle: daily
+    tariffs:
+      - daylight
+      - night
+  tages_energy:
+    source: sensor.riemann_wohnung
+    cycle: daily
     
 template:
   - sensor:
@@ -51,8 +48,7 @@ template:
         device_class: energy
         state: >
           {{ 
-            states('sensor.kueche_energy_day') | float(0) +
-            states('sensor.az_energy_day') | float(0)
+            states('sensor.gesamt_energy_daylight') | float(0) 
           }}
   - sensor:
       - name: "Total Energy Consumption Night"
@@ -61,6 +57,5 @@ template:
         device_class: energy
         state: >
           {{ 
-            states('sensor.kueche_energy_night') | float(0) +
-            states('sensor.az_energy_night') | float(0)
+            states('sensor.gesamt_energy_night') | float(0)
           }}
