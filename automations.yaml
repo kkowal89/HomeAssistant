@@ -1,123 +1,17 @@
 - id: 2334 AZ
-  alias: Switch AZ Energy Tariff
+  alias: Switch Wohnung Energy Tariff
   trigger:
   - platform: state
     entity_id: sensor.is_daytime
   action:
   - service: select.select_option
     target:
-      entity_id: select.az_energy
+      entity_id: select.gesamt_energy
     data:
-      option: >
-        {% if states('sensor.is_daytime') == 'True' %}
-          daylight
-        {% else %}
-          night
-        {% endif %}
-- id: 2334 Kueche
-  alias: Switch Kitchen Energy Tariff
-  trigger:
-  - platform: state
-    entity_id: sensor.is_daytime
-  action:
-  - service: select.select_option
-    target:
-      entity_id: select.kueche_energy
-    data:
-      option: >
-        {% if states('sensor.is_daytime') == 'True' %}
-          daylight
-        {% else %}
-          night
-        {% endif %}
-- id: '1734987755592'
-  alias: Schalte Wohnzimmer ein oder aus
-  description: ''
-  triggers:
-  - device_id: da00b488c6a27cda4a2c77904a8d1e7e
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    metadata: {}
-    trigger: device
-    value: 0
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: 94fac33ef8ba3fcbf1a67e710755f09a
-    entity_id: 445ccbc016b29424584d15e3de50e3b7
-    domain: switch
-  mode: single
-- id: '1734988240216'
-  alias: Wohnzimmer an/aus
-  description: ''
-  triggers:
-  - device_id: 012478b40a833779d2c20907c4f6a097
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    trigger: device
-    value: 0
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: 94fac33ef8ba3fcbf1a67e710755f09a
-    entity_id: 445ccbc016b29424584d15e3de50e3b7
-    domain: switch
-  mode: single
-- id: '1735218193653'
-  alias: Kevins Rechner An/aus
-  description: ''
-  triggers:
-  - device_id: 9788c1144c4a45d692f5c9e4164c9382
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    metadata: {}
-    trigger: device
-    value: 0
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: 838f8a7f0aac103c8e65aecde55dbc92
-    entity_id: 49b631ec1968710cb37bc5c6599c5a0b
-    domain: switch
-  mode: single
-- id: '1735578863895'
-  alias: Drücken
-  description: ''
-  triggers:
-  - device_id: 561320860870d484bd39eb1c34906ddb
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    trigger: device
-    value: 0
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: f21d7ad2561ae3d35093dfad603da156
-    entity_id: e7b71858c03bcfc0120c9af4f54799f5
-    domain: switch
-  mode: single
+      option: "{% if states('sensor.is_daytime') == 'True' %}\n  daylight\n{% else
+        %}\n  night\n{% endif %}\n"
 - id: '1735578926755'
-  alias: Neue Automatisierung
+  alias: Fernseher und Co an
   description: ''
   triggers:
   - device_id: b3792050cee15722f5ba9b8b8720f09a
@@ -160,117 +54,6 @@
     entity_id: 49b631ec1968710cb37bc5c6599c5a0b
     domain: switch
   mode: single
-- id: '1735852118691'
-  alias: halten
-  description: ''
-  triggers:
-  - device_id: 561320860870d484bd39eb1c34906ddb
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    trigger: device
-    value: 2
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: f21d7ad2561ae3d35093dfad603da156
-    entity_id: e7b71858c03bcfc0120c9af4f54799f5
-    domain: switch
-  mode: single
-- id: '1735852204963'
-  alias: Loslassen
-  description: ''
-  triggers:
-  - device_id: 561320860870d484bd39eb1c34906ddb
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    trigger: device
-    value: 1
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: f21d7ad2561ae3d35093dfad603da156
-    entity_id: e7b71858c03bcfc0120c9af4f54799f5
-    domain: switch
-  mode: single
-- id: '1736359329156'
-  alias: 'Küche ein aus '
-  description: ''
-  triggers:
-  - device_id: 8b5807ddae811b8591db376a9719dea5
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '006'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 006
-    trigger: device
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: f21d7ad2561ae3d35093dfad603da156
-    entity_id: e7b71858c03bcfc0120c9af4f54799f5
-    domain: switch
-  mode: single
-- id: '1736794147510'
-  alias: Heizung AZ an
-  description: ''
-  triggers:
-  - device_id: 8b5807ddae811b8591db376a9719dea5
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '001'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 001
-    metadata: {}
-    trigger: device
-  conditions: []
-  actions:
-  - device_id: 562f11754267e2cbcefb1fbfc556ec8f
-    domain: climate
-    entity_id: 33faaf23f9662ac8a54e3f1ea8514964
-    type: set_hvac_mode
-    hvac_mode: heat
-  - action: climate.set_temperature
-    metadata: {}
-    data:
-      temperature: 18.5
-    target:
-      device_id: 562f11754267e2cbcefb1fbfc556ec8f
-  mode: single
-- id: '1736794184748'
-  alias: Heizung AZ Aus
-  description: ''
-  triggers:
-  - device_id: 8b5807ddae811b8591db376a9719dea5
-    domain: zwave_js
-    type: event.value_notification.central_scene
-    property: scene
-    property_key: '002'
-    endpoint: 0
-    command_class: 91
-    subtype: Endpoint 0 Scene 002
-    trigger: device
-  conditions: []
-  actions:
-  - device_id: 562f11754267e2cbcefb1fbfc556ec8f
-    domain: climate
-    entity_id: 33faaf23f9662ac8a54e3f1ea8514964
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  mode: single
 - id: '1736797360613'
   alias: AZ Heizung An
   description: ''
@@ -291,13 +74,13 @@
     metadata: {}
     data: {}
     target:
-      device_id: 45648038ecf081a1ead6178b40985e4b
+      device_id: 530d13db1ba58e93ad2b7424b8f343f5
   - action: climate.set_temperature
     metadata: {}
     data:
       temperature: 19
     target:
-      device_id: 45648038ecf081a1ead6178b40985e4b
+      device_id: 530d13db1ba58e93ad2b7424b8f343f5
   mode: single
 - id: '1736797421904'
   alias: AZ Heizung Aus
@@ -319,5 +102,153 @@
     metadata: {}
     data: {}
     target:
-      device_id: 45648038ecf081a1ead6178b40985e4b
+      device_id: 530d13db1ba58e93ad2b7424b8f343f5
+  mode: single
+- id: '1737232893332'
+  alias: Schalter 2 Küche
+  description: ''
+  triggers:
+  - device_id: 553c0f81c8156d5d943926b205667fa4
+    domain: zha
+    type: initial_switch_press
+    subtype: button_2
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: f21d7ad2561ae3d35093dfad603da156
+    entity_id: e7b71858c03bcfc0120c9af4f54799f5
+    domain: switch
+  mode: single
+- id: '1737665275208'
+  alias: Küche Button 1 An/aus
+  description: ''
+  triggers:
+  - device_id: 553c0f81c8156d5d943926b205667fa4
+    domain: zha
+    type: initial_switch_press
+    subtype: button_1
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: f21d7ad2561ae3d35093dfad603da156
+    entity_id: e7b71858c03bcfc0120c9af4f54799f5
+    domain: switch
+  mode: single
+- id: '1737666120803'
+  alias: SZ Heizung An
+  description: ''
+  triggers:
+  - device_id: 8b5807ddae811b8591db376a9719dea5
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '006'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 006
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - action: climate.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id: a94d8ea5427ed4bb9b584ebe4e48108d
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 19
+    target:
+      device_id: a94d8ea5427ed4bb9b584ebe4e48108d
+  mode: single
+- id: '1737666170159'
+  alias: SZ Heizung Aus
+  description: ''
+  triggers:
+  - device_id: 8b5807ddae811b8591db376a9719dea5
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '005'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 005
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id: a94d8ea5427ed4bb9b584ebe4e48108d
+  mode: single
+- id: '1737666464562'
+  alias: WZ Heizung An
+  description: ''
+  triggers:
+  - device_id: b3792050cee15722f5ba9b8b8720f09a
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '006'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 006
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - action: climate.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id: d71faf21e3b7df1d9032cd05f05e543c
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 19
+    target:
+      device_id: d71faf21e3b7df1d9032cd05f05e543c
+  - action: climate.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id: d86f1513bd106a1efa9e7929a6df07db
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 19
+    target:
+      device_id: d86f1513bd106a1efa9e7929a6df07db
+  mode: single
+- id: '1737666688075'
+  alias: Heizung WZ Aus
+  description: ''
+  triggers:
+  - device_id: b3792050cee15722f5ba9b8b8720f09a
+    domain: zwave_js
+    type: event.value_notification.central_scene
+    property: scene
+    property_key: '005'
+    endpoint: 0
+    command_class: 91
+    subtype: Endpoint 0 Scene 005
+    trigger: device
+    value: 0
+  conditions: []
+  actions:
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id: d71faf21e3b7df1d9032cd05f05e543c
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id: d86f1513bd106a1efa9e7929a6df07db
   mode: single
