@@ -13,8 +13,7 @@ device_tracker:
   - platform: bluetooth_le_tracker
 
 # Quirks for Zigbee Thermostat
-zha:
-  custom_quirks_path: /config/custom_zha_quirks
+
 
 sensor:
   - platform: statistics
