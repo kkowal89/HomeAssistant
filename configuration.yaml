@@ -1,4 +1,3 @@
-
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -11,51 +10,80 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 device_tracker:
-- platform: bluetooth_le_tracker
+  - platform: bluetooth_le_tracker
 
-#Quirks for Zigbee Thermostat
-zha: 
-    custom_quirks_path: /config/config/custom_zha_quirks
-    
+# Quirks for Zigbee Thermostat
+zha:
+  custom_quirks_path: /config/custom_zha_quirks
+
 sensor:
-  - platform: template
-    sensors:
-      is_daytime:
-        value_template: "{{ state_attr('sun.sun', 'elevation') > 4 }}"
+  - platform: statistics
+    name: "Average Daily Energy Consumption (Day)"
+    entity_id: sensor.gesamt_energy_daylight
+    state_characteristic: mean
+    max_age:
+      days: 7
+
+  - platform: statistics
+    name: "Average Daily Energy Consumption (Night)"
+    entity_id: sensor.gesamt_energy_night
+    state_characteristic: mean
+    max_age:
+      days: 7
 
 utility_meter:
   balkon_energy_daily:
     source: sensor.riemannsum_balkonkraftwerk
     cycle: daily
+
   balkon_energy_monthly:
     source: sensor.riemannsum_balkonkraftwerk
     cycle: monthly
+
   gesamt_energy:
     source: sensor.riemann_wohnung
     cycle: daily
     tariffs:
       - daylight
       - night
+
   tages_energy:
     source: sensor.riemann_wohnung
     cycle: daily
-    
+
+  effective_energy_daily:
+    source: sensor.riemann_eff_wh_bk
+    cycle: daily
+
+  effective_energy_monthly:
+    source: sensor.riemann_eff_wh_bk
+    cycle: monthly
+
 template:
+  - binary_sensor:
+      - name: "Is Daytime"
+        state: "{{ state_attr('sun.sun', 'elevation') | float(0) > 0 }}"
+
   - sensor:
       - name: "Total Energy Consumption Day"
         unit_of_measurement: "Wh"
-        state_class: total
+        state_class: total_increasing
         device_class: energy
-        state: >
-          {{ 
-            states('sensor.gesamt_energy_daylight') | float(0) 
-          }}
+        state: "{{ states('sensor.gesamt_energy_daylight') | float(0) }}"
+
   - sensor:
       - name: "Total Energy Consumption Night"
         unit_of_measurement: "Wh"
-        state_class: total
+        state_class: total_increasing
         device_class: energy
+        state: "{{ states('sensor.gesamt_energy_night') | float(0) }}"
+
+  - sensor:
+      - name: "Effektiver Strom vom BK"
+        unit_of_measurement: "W"
+        state_class: measurement
+        device_class: power
         state: >
-          {{ 
-            states('sensor.gesamt_energy_night') | float(0)
-          }}
+          {% set balkonkraftwerk = states('sensor.balkonkraftwerk_switch_0_power') | float(0) %}
+          {% set wohnung = states('sensor.gesamte_wohnung_total_active_power') | float(0) %}
+          {{ [balkonkraftwerk, wohnung] | min }}
